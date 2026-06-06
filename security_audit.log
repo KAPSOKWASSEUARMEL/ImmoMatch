@@ -891,3 +891,4 @@ django.db.utils.OperationalError: no such column: listings_house.agent_phone
 2026-06-05 00:01:54 | ALERT_SECURITY | Utilisateur: Bob (ID: 2) | IP: 127.0.0.1 | A consulté le contact WhatsApp du bailleur pour le logement ID: 2 (APPARTMENT PREMIUM) | Navigateur: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
 2026-06-05 09:15:55 | ALERT_SECURITY | C:\Users\ARMEL\Documents\ImmoMatch\immomatch_project\urls.py changed, reloading.
 2026-06-05 09:18:13 | ALERT_SECURITY | Utilisateur: Bob (ID: 2) | IP: 127.0.0.1 | A consulté le contact WhatsApp du bailleur pour le logement ID: 3 (FURNISHED STUDIO) | Navigateur: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+2026-06-06 19:14:10 | ALERT_SECURITY | D:\ImmoMatch\immomatch_project\settings.py changed, reloading.

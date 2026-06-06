@@ -32,6 +32,10 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 # Autoriser l'hôte fourni par Railway ou toutes les adresses en production
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+# À AJOUTER : Liste des origines de confiance pour les formulaires sécurisés (CSRF)
+CSRF_TRUSTED_ORIGINS = [
+    'https://immomatch-production.up.railway.app',
+]
 
 
 # Application definition
