@@ -1,0 +1,1 @@
+web: gunicorn immomatch_project.wsgi:application

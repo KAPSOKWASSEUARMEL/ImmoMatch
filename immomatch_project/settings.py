@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
+from django.utils.translation import gettext_lazy as _
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w1-apk@v_$q9k^mu2!wb_q9!*_+mw^p*$^er=07_5(vkl(quyz'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-w1-apk@v_$q9k^mu2!wb_q9!*_+mw^p*$^er=07_5(vkl(quyz')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Si la variable d'environnement DEBUG existe, on l'utilise, sinon True par défaut en local
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+# Autoriser l'hôte fourni par Railway ou toutes les adresses en production
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
 
 # Application definition
