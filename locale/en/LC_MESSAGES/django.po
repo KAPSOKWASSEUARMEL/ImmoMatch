@@ -1,0 +1,57 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "Liste des Maisons"
+msgstr "House Listings"
+
+msgid "Bienvenue"
+msgstr "Welcome"
+
+msgid "Se déconnecter"
+msgstr "Log out"
+
+msgid "Se connecter"
+msgstr "Log in"
+
+msgid "S'inscrire"
+msgstr "Register"
+
+msgid "Bienvenue sur ImmoMatch"
+msgstr "Welcome to ImmoMatch"
+
+msgid "Trouvez votre bien locatif idéal en toute sécurité."
+msgstr "Find your ideal rental property safely."
+
+msgid "Filtrer les logements disponibles"
+msgstr "Filter available accommodations"
+
+msgid "Ville :"
+msgstr "City:"
+
+msgid "Quartier :"
+msgstr "Neighborhood:"
+
+msgid "Budget max (FCFA) :"
+msgstr "Max budget (FCFA):"
+
+msgid "Rechercher"
+msgstr "Search"
+
+msgid "Effacer"
+msgstr "Clear"
+
+msgid "Maisons disponibles"
+msgstr "Available houses"
+
+msgid "Aucune image disponible"
+msgstr "No image available"
+
+msgid "Voir les détails"
+msgstr "View Details"
+
+msgid "Aucun logement ne correspond exactement à vos critères de recherche."
+msgstr "No accommodation matches your exact search criteria."

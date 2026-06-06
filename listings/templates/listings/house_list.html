@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImmoMatch - {{ text.list_title }}</title>
+    <!-- Intégration de Tailwind CSS pour un design moderne -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Intégration des icônes Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- BARRE DE NAVIGATION MODERNE -->
+    <nav class="bg-slate-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+               <a href="{% url 'listings:house_list' %}" class="flex items-center gap-3 text-3xl font-black tracking-tight text-emerald-400 hover:text-emerald-300 transition duration-200">
+                    <span class="material-symbols-outlined text-4xl">corporate_fare</span>
+                    ImmoMatch
+                </a>
+                
+                <!-- Liens de session et Langues -->
+                <div class="flex items-center gap-6">
+                    {% if user.is_authenticated %}
+                        <div class="hidden sm:flex flex-col text-right">
+                            <span class="text-xs text-slate-400">{{ text.welcome }},</span>
+                            <span class="text-sm font-semibold text-emerald-400">{{ user.username }}</span>
+                        </div>
+                        <form method="post" action="{% url 'listings:logout' %}" class="m-0">
+                            {% csrf_token %}
+                            <button type="submit" class="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition duration-200 shadow-sm cursor-pointer">
+                                <span class="material-symbols-outlined text-sm">logout</span>
+                                {{ text.logout }}
+                            </button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'listings:login' %}" class="text-sm font-medium text-slate-300 hover:text-white transition">{{ text.login }}</a>
+                        <a href="{% url 'listings:register' %}" class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold py-2 px-4 rounded-lg transition shadow-sm">{{ text.register }}</a>
+                    {% endif %}
+
+                    <!-- Sélecteur de Langue Épuré -->
+                    <div class="border-l border-slate-700 pl-4 flex items-center gap-2 text-xs font-bold tracking-wider">
+                        <a href="?lang=fr" class="px-2 py-1 rounded {% if current_lang == 'fr' %}bg-emerald-500/20 text-emerald-400{% else %}text-slate-400 hover:text-white{% endif %} transition">FR</a>
+                        <span class="text-slate-700">|</span>
+                        <a href="?lang=en" class="px-2 py-1 rounded {% if current_lang == 'en' %}bg-emerald-500/20 text-emerald-400{% else %}text-slate-400 hover:text-white{% endif %} transition">EN</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- EN-TÊTE HÉROS (Hero Section) -->
+    <header class="bg-slate-900 text-white py-16 px-4 border-t border-slate-800 text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#34d399_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-3xl mx-auto relative z-10">
+            <h1 class="text-4xl sm:text-5xl font-black tracking-tight mb-4">{{ text.main_welcome }}</h1>
+            <p class="text-lg text-slate-300 max-w-xl mx-auto">{{ text.subtitle }}</p>
+        </div>
+    </header>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- BLOC DE RECHERCHE ET FILTRAGE AVANCÉ -->
+        <section class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 -mt-20 relative z-20 mb-12">
+            <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-emerald-500">tune</span>
+                {{ text.filter_title }}
+            </h3>
+            
+            <form method="get" action="{% url 'listings:house_list' %}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-end">
+                <input type="hidden" name="lang" value="{{ current_lang }}">
+                
+                <!-- Ville -->
+                <div class="flex flex-col gap-1.5">
+                    <label for="city" class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ text.label_city }}</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-2.5 text-gray-400 text-lg">location_on</span>
+                        <input type="text" id="city" name="city" value="{{ city_query }}" placeholder="Ex: Bamenda" class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition">
+                    </div>
+                </div>
+
+                <!-- Quartier -->
+                <div class="flex flex-col gap-1.5">
+                    <label for="neighborhood" class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ text.label_neighborhood }}</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-2.5 text-gray-400 text-lg">maps_home_work</span>
+                        <input type="text" id="neighborhood" name="neighborhood" value="{{ neighborhood_query }}" placeholder="Ex: Mrs.GainJunction" class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition">
+                    </div>
+                </div>
+
+                <!-- Budget Max -->
+                <div class="flex flex-col gap-1.5">
+                    <label for="price_max" class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ text.label_budget }}</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-2.5 text-gray-400 text-lg">payments</span>
+                        <input type="number" id="price_max" name="price_max" value="{{ price_max_query }}" placeholder="Ex: 60000" class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition">
+                    </div>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="flex gap-3">
+                    <button type="submit" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold h-10 px-6 rounded-xl shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
+                        <span class="material-symbols-outlined text-lg">search</span>
+                        {{ text.btn_search }}
+                    </button>
+                    {% if city_query or neighborhood_query or price_max_query %}
+                        <a href="{% url 'listings:house_list' %}?lang={{ current_lang }}" class="bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold h-10 px-4 rounded-xl transition flex items-center justify-center">
+                            <span class="material-symbols-outlined text-lg">close</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </form>
+        </section>
+        
+        <!-- SECTION LOGEMENTS -->
+        <h2 class="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-2">
+            <span class="material-symbols-outlined text-slate-950">real_estate_agent</span>
+            {{ text.section_title }}
+        </h2>
+
+        {% if houses %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for house in houses %}
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition duration-300 flex flex-col group">
+                    
+                    <!-- Image du bien -->
+                    <div class="relative overflow-hidden bg-gray-100 h-52">
+                        {% if house.main_image %}
+                            <img src="{{ house.main_image.url }}" alt="{{ house.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        {% else %}
+                            <div class="w-full h-full flex flex-col items-center justify-center text-gray-400 gap-2 text-sm font-medium">
+                                <span class="material-symbols-outlined text-4xl">hide_image</span>
+                                {{ text.no_image }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Détails textuels -->
+                    <div class="p-6 flex flex-col flex-1">
+                        <span class="inline-block text-xs font-bold tracking-wide uppercase text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md mb-3 self-start">
+                            {{ house.get_property_type_display }}
+                        </span>
+                        
+                        <h3 class="text-lg font-bold text-slate-800 line-clamp-1 mb-1">{{ house.title }}</h3>
+                        
+                        <p class="text-sm text-gray-500 flex items-center gap-1 mb-4">
+                            <span class="material-symbols-outlined text-sm text-gray-400">location_on</span>
+                            {{ house.city }} — {{ house.neighborhood }}
+                        </p>
+                        
+                        <p class="text-gray-600 text-sm line-clamp-2 mb-6 flex-1">{{ house.description }}</p>
+
+                        <div class="flex items-center justify-between border-t border-gray-50 pt-4 mt-auto">
+                            <span class="text-xl font-extrabold text-slate-950">{{ house.price }} <span class="text-xs font-normal text-gray-500">FCFA/m</span></span>
+                            <a href="{% url 'listings:house_detail' house.pk %}" class="inline-flex items-center gap-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-xs py-2.5 px-4 rounded-xl transition">
+                                {{ text.btn_details }}
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <!-- Message si aucun résultat -->
+            <div class="bg-amber-50 border-l-4 border-amber-500 text-amber-900 rounded-xl p-5 flex items-start gap-3">
+                <span class="material-symbols-outlined text-amber-600 mt-0.5">warning</span>
+                <p class="text-sm font-medium">{{ text.no_results }}</p>
+            </div>
+        {% endif %}
+    </main>
+
+</body>
+</html>

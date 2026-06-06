@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ImmoMatch - Connexion Locataire</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; background-color: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh;">
+
+    <div style="background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px;">
+        <h2 style="color: #333; text-align: center; margin-bottom: 20px;">Connexion Locataire</h2>
+        <p style="color: #666; text-align: center; font-size: 14px; margin-bottom: 30px;">Connectez-vous pour gérer vos recherches immobilières.</p>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div style="background: #fde8e8; color: #e74c3c; padding: 10px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div style="margin-bottom: 20px;">
+                <label for="id_username" style="display: block; margin-bottom: 8px; color: #555; font-weight: bold;">Nom d'utilisateur :</label>
+                <input type="text" name="username" id="id_username" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <label for="id_password" style="display: block; margin-bottom: 8px; color: #555; font-weight: bold;">Mot de passe :</label>
+                <input type="password" name="password" id="id_password" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            </div>
+
+            <button type="submit" style="width: 100%; background: #3498db; color: white; padding: 12px; border: none; border-radius: 4px; font-weight: bold; font-size: 16px; cursor: pointer;">
+                Se connecter
+            </button>
+        </form>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="{% url 'listings:house_list' %}" style="color: #7f8c8d; text-decoration: none; font-size: 14px;">&larr; Retour à l'accueil</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ImmoMatch - Registration</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; background-color: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh;">
+
+    <div style="background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 450px;">
+        <h2 style="color: #333; text-align: center; margin-bottom: 20px;">Créer un compte Locataire</h2>
+        <p style="color: #666; text-align: center; font-size: 14px; margin-bottom: 30px;">Join the public page ImmoMatch and find your confortable lodging.</p>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <div style="background: #fde8e8; color: #e74c3c; padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;">
+                    <strong>please kindly correct the following errors :</strong>
+                    <ul style="margin: 5px 0 0 20px; padding: 0;">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }} : {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div style="margin-bottom: 20px;">
+                    <label for="{{ field.id_for_label }}" style="display: block; margin-bottom: 8px; color: #555; font-weight: bold;">{{ field.label }} :</label>
+                    <input type="{{ field.field.widget.input_type|default:'text' }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                    {% if field.help_text %}
+                        <small style="display: block; color: #7f8c8d; font-size: 11px; margin-top: 5px; line-height: 1.3;">{{ field.help_text }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" style="width: 100%; background: #2ecc71; color: white; padding: 12px; border: none; border-radius: 4px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px;">
+                Register an account
+            </button>
+        </form>
+
+        <div style="margin-top: 25px; text-align: center; border-top: 1px solid #eee; padding-top: 15px;">
+            <p style="font-size: 14px; color: #555; margin: 0;">Déjà inscrit ? <a href="{% url 'listings:login' %}" style="color: #3498db; text-decoration: none; font-weight: bold;">Connectez-vous ici</a></p>
+        </div>
+    </div>
+
+</body>
+</html>
