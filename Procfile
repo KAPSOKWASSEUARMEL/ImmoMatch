@@ -1,1 +1,1 @@
-pip install gunicorn psycopg2-binary dj-database-url
+web: gunicorn immomatch_project.wsgi:application
