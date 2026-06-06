@@ -80,6 +80,9 @@ WSGI_APPLICATION = 'immomatch_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# Database
+# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -87,9 +90,18 @@ DATABASES = {
     }
 }
 
+# Configuration spécifique pour PostgreSQL sur Railway
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # <--- À AJOUTER POUR LA PRODUCTION
+
 # Configuration pour la gestion des fichiers médias (photos des maisons)
 MEDIA_URL = '/media/'
-import os
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Redirection automatique vers l'accueil après une connexion réussie
@@ -144,10 +156,8 @@ LOCALE_PATHS = [
 
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
-import os
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-import os
 
 # Emplacement sur le disque dur où Django va stocker les images téléchargées
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
